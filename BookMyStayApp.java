@@ -1,55 +1,65 @@
-import java.util.HashMap;
-import java.util.Map;
-
 /**
- * RoomInventory class manages centralized room availability
- * using a HashMap.
- *
- * @author Christopher Wilson
- * @version 3.0
+ * Reservation class representing a guest booking request
  */
-class RoomInventory {
+import java.util.LinkedList;
+import java.util.Queue;
 
-    private HashMap<String, Integer> inventory;
+class Reservation {
 
-    // Constructor to initialize inventory
-    public RoomInventory() {
-        inventory = new HashMap<>();
+    private String guestName;
+    private String roomType;
 
-        // Register room types with availability
-        inventory.put("Single Room", 10);
-        inventory.put("Double Room", 7);
-        inventory.put("Suite Room", 3);
+    public Reservation(String guestName, String roomType) {
+        this.guestName = guestName;
+        this.roomType = roomType;
     }
 
-    // Method to get availability
-    public int getAvailability(String roomType) {
-        return inventory.getOrDefault(roomType, 0);
+    public String getGuestName() {
+        return guestName;
     }
 
-    // Method to update availability
-    public void updateAvailability(String roomType, int newCount) {
-        inventory.put(roomType, newCount);
+    public String getRoomType() {
+        return roomType;
     }
 
-    // Display full inventory
-    public void displayInventory() {
+    public void displayReservation() {
+        System.out.println("Guest Name : " + guestName);
+        System.out.println("Room Type  : " + roomType);
+    }
+}
+class BookingRequestQueue {
 
-        System.out.println("\n------ Current Room Inventory ------");
+    private Queue<Reservation> requestQueue;
 
-        for (Map.Entry<String, Integer> entry : inventory.entrySet()) {
-            System.out.println(entry.getKey() + " : " + entry.getValue());
+    public BookingRequestQueue() {
+        requestQueue = new LinkedList<>();
+    }
+
+    // Add booking request
+    public void addRequest(Reservation reservation) {
+        requestQueue.offer(reservation);
+        System.out.println("Booking request added for " + reservation.getGuestName());
+    }
+
+    // Display all requests in queue
+    public void displayRequests() {
+
+        System.out.println("\n------ Booking Request Queue ------");
+
+        for (Reservation r : requestQueue) {
+            r.displayReservation();
+            System.out.println("-----------------------------");
         }
     }
 }
 /**
- * Use Case 3: Centralized Room Inventory Management
+ * Use Case 5: Booking Request Queue (FIFO)
  *
- * Demonstrates how HashMap provides a single source of truth
- * for managing room availability.
+ * Demonstrates first-come-first-served booking request intake
+ * using a Queue data structure.
  *
  * @author Christopher Wilson
- * @version 3.1
+ * @version 5.0
  */
 
 public class BookMyStayApp {
@@ -57,28 +67,27 @@ public class BookMyStayApp {
     public static void main(String[] args) {
 
         System.out.println("=========== Book My Stay ===========");
-        System.out.println(" Hotel Booking System v3.1 ");
-        System.out.println(" Centralized Inventory Demo ");
+        System.out.println(" Hotel Booking System v5.0 ");
+        System.out.println(" Booking Request Queue Demo ");
         System.out.println("====================================");
 
-        // Initialize inventory
-        RoomInventory inventory = new RoomInventory();
+        // Initialize booking queue
+        BookingRequestQueue bookingQueue = new BookingRequestQueue();
 
-        // Display current inventory
-        inventory.displayInventory();
+        // Create booking requests
+        Reservation r1 = new Reservation("Alice", "Single Room");
+        Reservation r2 = new Reservation("Bob", "Double Room");
+        Reservation r3 = new Reservation("Charlie", "Suite Room");
 
-        // Example availability lookup
-        System.out.println("\nChecking availability for Single Room...");
-        int available = inventory.getAvailability("Single Room");
-        System.out.println("Available Single Rooms: " + available);
+        // Add requests to queue
+        bookingQueue.addRequest(r1);
+        bookingQueue.addRequest(r2);
+        bookingQueue.addRequest(r3);
 
-        // Example update
-        System.out.println("\nUpdating inventory...");
-        inventory.updateAvailability("Single Room", 8);
+        // Display queue (FIFO order)
+        bookingQueue.displayRequests();
 
-        // Display updated inventory
-        inventory.displayInventory();
-
-        System.out.println("\nInventory operations completed successfully.");
+        System.out.println("\nAll requests stored in arrival order.");
+        System.out.println("No inventory updates performed at this stage.");
     }
 }
