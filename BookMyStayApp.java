@@ -1,5 +1,11 @@
 import java.util.*;
 
+class InvalidBookingException extends Exception {
+    public InvalidBookingException(String message) {
+        super(message);
+    }
+}
+
 class Reservation {
     private String reservationId;
     private String guestName;
@@ -37,72 +43,108 @@ class Reservation {
     }
 }
 
-class BookingHistory {
-    private List<Reservation> confirmedBookings;
+class HotelInventory {
+    private Map<String, Integer> roomAvailability;
+    private Map<String, Double> roomPrices;
 
-    public BookingHistory() {
-        confirmedBookings = new ArrayList<>();
+    public HotelInventory() {
+        roomAvailability = new HashMap<>();
+        roomPrices = new HashMap<>();
+
+        roomAvailability.put("Standard", 2);
+        roomAvailability.put("Deluxe", 2);
+        roomAvailability.put("Suite", 1);
+
+        roomPrices.put("Standard", 3000.0);
+        roomPrices.put("Deluxe", 5000.0);
+        roomPrices.put("Suite", 8000.0);
     }
 
-    public void addBooking(Reservation reservation) {
-        confirmedBookings.add(reservation);
-    }
-
-    public List<Reservation> getAllBookings() {
-        return confirmedBookings;
-    }
-}
-
-class BookingReportService {
-    public void displayAllBookings(BookingHistory history) {
-        List<Reservation> bookings = history.getAllBookings();
-
-        if (bookings.isEmpty()) {
-            System.out.println("No booking history available.");
-            return;
-        }
-
-        System.out.println("===== Booking History =====");
-        for (Reservation reservation : bookings) {
-            System.out.println(reservation);
+    public void validateRoomType(String roomType) throws InvalidBookingException {
+        if (!roomAvailability.containsKey(roomType)) {
+            throw new InvalidBookingException("Invalid room type: " + roomType + ". Valid room types are Standard, Deluxe, Suite.");
         }
     }
 
-    public void generateSummaryReport(BookingHistory history) {
-        List<Reservation> bookings = history.getAllBookings();
+    public void validateAvailability(String roomType) throws InvalidBookingException {
+        int available = roomAvailability.get(roomType);
+        if (available <= 0) {
+            throw new InvalidBookingException("No rooms available for room type: " + roomType);
+        }
+    }
 
-        int totalBookings = bookings.size();
-        double totalRevenue = 0;
+    public Reservation confirmBooking(String reservationId, String guestName, String roomType) throws InvalidBookingException {
+        validateRoomType(roomType);
+        validateAvailability(roomType);
 
-        for (Reservation reservation : bookings) {
-            totalRevenue += reservation.getRoomCost();
+        int currentAvailability = roomAvailability.get(roomType);
+        if (currentAvailability - 1 < 0) {
+            throw new InvalidBookingException("Inventory error: Cannot reduce " + roomType + " rooms below zero.");
         }
 
-        System.out.println("\n===== Booking Summary Report =====");
-        System.out.println("Total Confirmed Bookings : " + totalBookings);
-        System.out.println("Total Revenue            : Rs." + totalRevenue);
+        roomAvailability.put(roomType, currentAvailability - 1);
+
+        return new Reservation(reservationId, guestName, roomType, roomPrices.get(roomType));
+    }
+
+    public void displayAvailability() {
+        System.out.println("Current Room Availability:");
+        for (Map.Entry<String, Integer> entry : roomAvailability.entrySet()) {
+            System.out.println(entry.getKey() + " : " + entry.getValue());
+        }
     }
 }
 
 public class BookMyStayApp {
     public static void main(String[] args) {
-        Reservation r1 = new Reservation("R101", "Christopher", "Deluxe Room", 5000);
-        Reservation r2 = new Reservation("R102", "Aarav", "Suite Room", 8000);
-        Reservation r3 = new Reservation("R103", "Priya", "Standard Room", 3000);
+        HotelInventory inventory = new HotelInventory();
 
-        BookingHistory bookingHistory = new BookingHistory();
+        System.out.println("===== Book My Stay - Use Case 9: Error Handling & Validation =====\n");
 
-        bookingHistory.addBooking(r1);
-        bookingHistory.addBooking(r2);
-        bookingHistory.addBooking(r3);
+        inventory.displayAvailability();
+        System.out.println();
 
-        BookingReportService reportService = new BookingReportService();
+        try {
+            Reservation r1 = inventory.confirmBooking("R101", "Christopher", "Deluxe");
+            System.out.println("Booking Successful:");
+            System.out.println(r1);
+        } catch (InvalidBookingException e) {
+            System.out.println("Booking Failed: " + e.getMessage());
+        }
 
-        System.out.println("===== Book My Stay - Use Case 8: Booking History & Reporting =====\n");
+        System.out.println();
 
-        reportService.displayAllBookings(bookingHistory);
-        reportService.generateSummaryReport(bookingHistory);
+        try {
+            Reservation r2 = inventory.confirmBooking("R102", "Aarav", "deluxe");
+            System.out.println("Booking Successful:");
+            System.out.println(r2);
+        } catch (InvalidBookingException e) {
+            System.out.println("Booking Failed: " + e.getMessage());
+        }
 
-        System.out.println("\nStored booking data remains unchanged after reporting.");
+        System.out.println();
+
+        try {
+            Reservation r3 = inventory.confirmBooking("R103", "Priya", "Suite");
+            System.out.println("Booking Successful:");
+            System.out.println(r3);
+        } catch (InvalidBookingException e) {
+            System.out.println("Booking Failed: " + e.getMessage());
+        }
+
+        System.out.println();
+
+        try {
+            Reservation r4 = inventory.confirmBooking("R104", "Rahul", "Suite");
+            System.out.println("Booking Successful:");
+            System.out.println(r4);
+        } catch (InvalidBookingException e) {
+            System.out.println("Booking Failed: " + e.getMessage());
+        }
+
+        System.out.println();
+        System.out.println("System remains stable after handling errors.\n");
+
+        inventory.displayAvailability();
     }
 }
