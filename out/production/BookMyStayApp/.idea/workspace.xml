@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="be3a17b5-0e2a-4c88-8e41-f963b313c8d9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/BookMyStayApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/BookMyStayApp.java" afterDir="false" />
-    </list>
+    <list default="true" id="e62fb0fe-2e05-4721-ac89-d8e24cc7f715" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,13 +13,13 @@
   <component name="GitHubPullRequestSearchHistory"><![CDATA[{
   "lastFilter": {
     "state": "OPEN",
-    "assignee": "yashsharma0812"
+    "assignee": "Shlok-2006"
   }
 }]]></component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/Christoeverywhere/BookMyStayApp.git",
-    "accountId": "2a1d997f-b9e7-4cae-a114-54d9a4bed9fe"
+    "accountId": "6254ca6d-3458-4e75-ae1a-90622f41dc16"
   }
 }]]></component>
   <component name="McpProjectServerCommands">
@@ -32,26 +27,21 @@
     <urls />
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5
+  "associatedIndex": 7
 }]]></component>
-  <component name="ProjectId" id="3B1J01GJh5Vgbokz5e8uAy4AYCj" />
+  <component name="ProjectId" id="3BNr5OYU6TTIgHsuy4brc0pcU1r" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.BookMyStayApp.executor": "Run",
-    "Application.UseCase3InventorySetup.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "feature/UC2",
-    "ignore.virus.scanning.warn.message": "true",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Admin/Desktop/BookMyStayApp/BookMyStayApp",
-    "settings.editor.selected.configurable": "configurable.group.tools"
+    "last_opened_file_path": "C:/Users/Admin/Documents/RA2412704010004/BookMyStayApp"
   }
 }]]></component>
   <component name="SharedIndexes">
@@ -63,15 +53,12 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="be3a17b5-0e2a-4c88-8e41-f963b313c8d9" name="Changes" comment="" />
-      <created>1773650415149</created>
+      <changelist id="e62fb0fe-2e05-4721-ac89-d8e24cc7f715" name="Changes" comment="" />
+      <created>1774340184531</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1773650415149</updated>
+      <updated>1774340184531</updated>
     </task>
     <servers />
-  </component>
-  <component name="TerminalProjectNonSharedOptionsProvider">
-    <option name="startingDirectory" value="C:\ProgramData\Microsoft\Windows\Start Menu\Programs\JetBrains" />
   </component>
 </project>
